@@ -1,4 +1,4 @@
-class QuotesController < ApplicationController
+class QuotesController < class OpenReadController
   before_action :set_quote, only: [:show, :update, :destroy]
 
   # GET /quotes
@@ -10,12 +10,21 @@ class QuotesController < ApplicationController
 
   # GET /quotes/1
   def show
+    @quotes = Quote.all
     render json: @quote
   end
 
   # POST /quotes
   def create
-    @quote = Quote.new(quote_params)
+
+    #my edit
+    # @quote = Quote.new(quote_params)
+
+    # example
+    # @example = current_user.quotes.build(quote_params)
+
+    # this is my added code
+    @quote = current_user.quotes.build(quote_params)
 
     if @quote.save
       render json: @quote, status: :created, location: @quote
@@ -26,6 +35,20 @@ class QuotesController < ApplicationController
 
   # PATCH/PUT /quotes/1
   def update
+    # this is my added code
+
+
+    # example
+    # def set_example
+    #     @example = current_user.examples.find(params[:id])
+    # end
+
+
+    # this is my added code
+    def set_quote
+      @quote = current_user.quote.find(params[:id])
+    end
+
     if @quote.update(quote_params)
       render json: @quote
     else
@@ -36,6 +59,10 @@ class QuotesController < ApplicationController
   # DELETE /quotes/1
   def destroy
     @quote.destroy
+
+    def set_quote
+      @quote = current_user.quote.find(params[:id])
+    end
   end
 
   private
