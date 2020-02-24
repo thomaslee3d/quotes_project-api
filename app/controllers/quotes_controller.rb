@@ -1,5 +1,7 @@
-class QuotesController < class OpenReadController
-  before_action :set_quote, only: [:show, :update, :destroy]
+# frozen_string_literal: true
+
+class QuotesController < OpenReadController
+  before_action :set_quote, only: %i[update destroy]
 
   # GET /quotes
   def index
@@ -16,12 +18,11 @@ class QuotesController < class OpenReadController
 
   # POST /quotes
   def create
-
-    #my edit
+    # my edit
     # @quote = Quote.new(quote_params)
 
     # example
-    # @example = current_user.quotes.build(quote_params)
+    # @example = current_user.examples.build(quote_params)
 
     # this is my added code
     @quote = current_user.quotes.build(quote_params)
@@ -35,19 +36,10 @@ class QuotesController < class OpenReadController
 
   # PATCH/PUT /quotes/1
   def update
-    # this is my added code
-
-
     # example
     # def set_example
     #     @example = current_user.examples.find(params[:id])
     # end
-
-
-    # this is my added code
-    def set_quote
-      @quote = current_user.quote.find(params[:id])
-    end
 
     if @quote.update(quote_params)
       render json: @quote
@@ -60,19 +52,18 @@ class QuotesController < class OpenReadController
   def destroy
     @quote.destroy
 
-    def set_quote
-      @quote = current_user.quote.find(params[:id])
-    end
+    head :no_content
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_quote
-      @quote = Quote.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_quote
+    @quote = Quote.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def quote_params
-      params.require(:quote).permit(:given_name, :quote)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def quote_params
+    params.require(:quote).permit(:given_name, :quote)
+  end
+
+  private :set_quote, :quote_params
 end
