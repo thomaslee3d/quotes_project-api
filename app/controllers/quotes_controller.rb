@@ -3,7 +3,7 @@
 class QuotesController < OpenReadController
   before_action :set_quote, only: %i[update destroy]
 
-  # GET /quotes
+  # GET /quot
   def index
     @quotes = Quote.all
 
@@ -40,7 +40,6 @@ class QuotesController < OpenReadController
     # def set_example
     #     @example = current_user.examples.find(params[:id])
     # end
-
     if @quote.update(quote_params)
       render json: @quote
     else
@@ -57,7 +56,7 @@ class QuotesController < OpenReadController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_quote
-    @quote = Quote.find(params[:id])
+    @quote = current_user.quotes.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

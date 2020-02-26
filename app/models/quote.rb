@@ -1,3 +1,4 @@
 class Quote < ApplicationRecord
-  belong_to :user
+  belongs_to :user
+  validates :quote, :given_name, :user, presence: true
 end
